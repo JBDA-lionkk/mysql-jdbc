@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yyww.mysql.jdbc.dao.CustomerDao">
+
+    <resultMap type="com.yyww.mysql.jdbc.entity.Customer" id="CustomerMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CustomerMap">
+        select id,
+               create_time,
+               update_time,
+               gender,
+               username,
+               deleted
+        from demo.customer
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CustomerMap">
+        select id,
+               create_time,
+               update_time,
+               gender,
+               username,
+               deleted
+        from demo.customer limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CustomerMap">
+        select
+        id, create_time, update_time, gender, username, deleted
+        from demo.customer
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into demo.customer(create_time, update_time, gender, username, deleted)
+        values (#{createTime}, #{updateTime}, #{gender}, #{username}, #{deleted})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into demo.customer(create_time, update_time, gender, username, deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.createTime}, #{entity.updateTime}, #{entity.gender}, #{entity.username}, #{entity.deleted})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into demo.customer(create_time, update_time, gender, username, deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.createTime}, #{entity.updateTime}, #{entity.gender}, #{entity.username}, #{entity.deleted})
+        </foreach>
+        on duplicate key update
+        create_time = values(create_time) , update_time = values(update_time) , gender = values(gender) , username =
+        values(username) , deleted = values(deleted)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update demo.customer
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from demo.customer
+        where id = #{id}
+    </delete>
+
+</mapper>
+

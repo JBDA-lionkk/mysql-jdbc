@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yyww.mysql.jdbc.dao.MachineStatusDao">
+
+    <resultMap type="com.yyww.mysql.jdbc.entity.MachineStatus" id="MachineStatusMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="macId" column="mac_id" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MachineStatusMap">
+        select id,
+               create_time,
+               update_time,
+               mac_id,
+               price,
+               deleted
+        from demo.machine_status
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MachineStatusMap">
+        select id,
+               create_time,
+               update_time,
+               mac_id,
+               price,
+               deleted
+        from demo.machine_status limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MachineStatusMap">
+        select
+        id, create_time, update_time, mac_id, price, deleted
+        from demo.machine_status
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="macId != null and macId != ''">
+                and mac_id = #{macId}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into demo.machine_status(create_time, update_time, mac_id, price, deleted)
+        values (#{createTime}, #{updateTime}, #{macId}, #{price}, #{deleted})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into demo.machine_status(create_time, update_time, mac_id, price, deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.createTime}, #{entity.updateTime}, #{entity.macId}, #{entity.price}, #{entity.deleted})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into demo.machine_status(create_time, update_time, mac_id, price, deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.createTime}, #{entity.updateTime}, #{entity.macId}, #{entity.price}, #{entity.deleted})
+        </foreach>
+        on duplicate key update
+        create_time = values(create_time) , update_time = values(update_time) , mac_id = values(mac_id) , price =
+        values(price) , deleted = values(deleted)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update demo.machine_status
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="macId != null and macId != ''">
+                mac_id = #{macId},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from demo.machine_status
+        where id = #{id}
+    </delete>
+
+</mapper>
+
