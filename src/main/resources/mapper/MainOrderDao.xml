@@ -11,28 +11,7 @@
         <result property="deleted" column="deleted" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
-    <select id="queryById" resultMap="MainOrderMap">
-        select id,
-               order_id,
-               create_time,
-               update_time,
-               price,
-               deleted
-        from demo.main_order
-        where id = #{id}
-    </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="MainOrderMap">
-        select id,
-               order_id,
-               create_time,
-               update_time,
-               price,
-               deleted
-        from demo.main_order limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="MainOrderMap">
