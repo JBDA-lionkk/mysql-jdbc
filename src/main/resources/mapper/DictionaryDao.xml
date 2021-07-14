@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yyww.mysql.jdbc.dao.DictionaryDao">
 
-    <resultMap type="com.yyww.mysql.jdbc.entity.Dictionary" id="DictionaryMap">
+    <resultMap type="com.yyww.mysql.jdbc.entity.DictionaryEntity" id="DictionaryMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
@@ -19,7 +19,7 @@
                type,
                code,
                value
-        from demo.dictionary
+        from demo.dictionaryEntity
         where id = #{id}
     </select>
 
@@ -31,14 +31,14 @@
                type,
                code,
                value
-        from demo.dictionary limit #{offset}, #{limit}
+        from demo.dictionaryEntity limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="DictionaryMap">
         select
         id, create_time, update_time, type, code, value
-        from demo.dictionary
+        from demo.dictionaryEntity
         <where>
             <if test="id != null">
                 and id = #{id}

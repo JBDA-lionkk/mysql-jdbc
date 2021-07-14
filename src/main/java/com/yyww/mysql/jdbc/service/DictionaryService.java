@@ -1,6 +1,7 @@
 package com.yyww.mysql.jdbc.service;
 
-import com.yyww.mysql.jdbc.entity.Dictionary;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.yyww.mysql.jdbc.entity.DictionaryEntity;
 
 import java.util.List;
 
@@ -10,47 +11,8 @@ import java.util.List;
  * @author makejava
  * @since 2021-07-13 15:50:04
  */
-public interface DictionaryService {
+public interface DictionaryService extends IService<DictionaryEntity> {
 
-    /**
-     * 通过ID查询单条数据
-     *
-     * @param id 主键
-     * @return 实例对象
-     */
-    Dictionary queryById(Long id);
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit  查询条数
-     * @return 对象列表
-     */
-    List<Dictionary> queryAllByLimit(int offset, int limit);
-
-    /**
-     * 新增数据
-     *
-     * @param dictionary 实例对象
-     * @return 实例对象
-     */
-    Dictionary insert(Dictionary dictionary);
-
-    /**
-     * 修改数据
-     *
-     * @param dictionary 实例对象
-     * @return 实例对象
-     */
-    Dictionary update(Dictionary dictionary);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param id 主键
-     * @return 是否成功
-     */
-    boolean deleteById(Long id);
 
 }

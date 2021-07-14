@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yyww.mysql.jdbc.dao.MainOrderDao">
 
-    <resultMap type="com.yyww.mysql.jdbc.entity.MainOrder" id="MainOrderMap">
+    <resultMap type="com.yyww.mysql.jdbc.entity.MainOrderEntity" id="MainOrderMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
