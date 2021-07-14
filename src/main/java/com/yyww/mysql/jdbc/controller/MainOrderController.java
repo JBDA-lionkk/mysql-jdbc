@@ -1,9 +1,10 @@
 package com.yyww.mysql.jdbc.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yyww.mysql.jdbc.entity.MainOrderEntity;
 import com.yyww.mysql.jdbc.service.MainOrderService;
 import com.yyww.mysql.jdbc.utils.JsonResponse;
+import com.yyww.mysql.jdbc.vo.OrderPage;
 import com.yyww.mysql.jdbc.vo.QueryOrderVo;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,10 +56,10 @@ public class MainOrderController {
     }
 
     @PostMapping("page")
-    public JsonResponse page(@RequestBody QueryOrderVo vo) {
-//        mainOrderService.queryPage(vo);
+    public JsonResponse<IPage<OrderPage>> page(@RequestBody QueryOrderVo vo) {
+        IPage<OrderPage> page =  mainOrderService.queryPage(vo);
 
-        return JsonResponse.ok();
+        return JsonResponse.ok(page);
     }
 
 }
