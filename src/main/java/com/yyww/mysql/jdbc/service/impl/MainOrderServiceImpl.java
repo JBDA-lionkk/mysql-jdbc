@@ -5,16 +5,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yyww.mysql.jdbc.dao.MainOrderDao;
-import com.yyww.mysql.jdbc.entity.MachineStatusEntity;
 import com.yyww.mysql.jdbc.entity.MainOrderEntity;
-import com.yyww.mysql.jdbc.service.MachineStatusService;
 import com.yyww.mysql.jdbc.service.MainOrderService;
 import com.yyww.mysql.jdbc.vo.OrderPage;
 import com.yyww.mysql.jdbc.vo.QueryOrderVo;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -41,5 +39,10 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderDao, MainOrderEnt
         mainOrderEntity.setOrderId(replace);
 
         this.save(mainOrderEntity);
+    }
+
+    @Override
+    public void removeByOrderIds(List<String> ids) {
+        baseMapper.removeByOrderIds(ids);
     }
 }

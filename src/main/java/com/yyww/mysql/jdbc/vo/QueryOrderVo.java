@@ -1,8 +1,10 @@
 package com.yyww.mysql.jdbc.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 public class QueryOrderVo {
@@ -29,13 +31,17 @@ public class QueryOrderVo {
     /**
      * 商品编号
      */
-    private String machineId;
+    private String macId;
     /**
      * 开始时间
      */
-    private Date createStartTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createStartTime;
     /**
      *结束时间
      */
-    private Date createEndTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createEndTime;
+
+    private BigDecimal price;
 }

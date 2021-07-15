@@ -10,43 +10,52 @@
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="gender" column="gender" jdbcType="VARCHAR"/>
     </resultMap>
+    <delete id="removeByOrderIds">
+        delete from main_order where order_id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
 
+    </delete>
 
 
     <select id="queryPage" resultMap="OrderPageMap">
         select
-        o.order_id, o.create_time, o.price, o.mac_id, cu.username,cu.gender
+            o.order_id, o.create_time, o.price, ms.mac_id, cu.username,cu.gender
         from
-        main_order o
+            main_order o
         left join
-        customer cu
+            customer cu
         on
-        o.order_id = cu.id
-
+            o.user_id = cu.id
+        left join
+        machine_status ms
+        on
+        ms.id = o.machine_id
         <where>
 
-            <if test="orderId != null and orderId != ''">
+            <if test="param.orderId != null and param.orderId != ''">
                 and o.order_id like concat('%',#{param.orderId},'%')
             </if>
-            <if test="createStartTime != null and createEndTime != null">
-                and o.create_time &gt; #{param.createStartTime} and o.create_time &lt; #{createEndTime}
+            <if test="param.createStartTime != null and param.createEndTime != null">
+                and o.create_time &gt; #{param.createStartTime} and o.create_time &lt; #{param.createEndTime}
             </if>
-            <if test="macId != null and macId != ''">
-                and o.macId like concat('%',#{param.machineId},'%')
-            </if>
-            <if test="username != null and username != ''">
+
+            <if test="param.username != null and param.username != ''">
                 and cu.username like concat('%',#{param.username},'%')
             </if>
-            <if test="gender != null">
+            <if test="param.gender != null">
                 and cu.gender = #{param.gender}
             </if>
-            <if test="price != null">
-                and o.price = #{price}
+            <if test="param.price != null">
+                and o.price = #{param.price}
             </if>
-            <if test="deleted != null">
-                and o.deleted = #{deleted}
+
+            <if test="param.macId != null and param.macId != ''">
+                and ms.mac_id like concat('%',#{param.macId},'%')
             </if>
         </where>
+
     </select>
 </mapper>
 

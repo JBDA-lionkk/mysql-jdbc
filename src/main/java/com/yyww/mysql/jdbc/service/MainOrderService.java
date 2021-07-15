@@ -7,6 +7,8 @@ import com.yyww.mysql.jdbc.vo.OrderPage;
 import com.yyww.mysql.jdbc.vo.QueryOrderVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * (MainOrder)表服务接口
  *
@@ -17,4 +19,6 @@ public interface MainOrderService extends IService<MainOrderEntity> {
     IPage<OrderPage> queryPage(QueryOrderVo vo);
 
     void add(@Param("mainOrderEntity") MainOrderEntity mainOrderEntity);
+
+    void removeByOrderIds(List<String> ids);
 }

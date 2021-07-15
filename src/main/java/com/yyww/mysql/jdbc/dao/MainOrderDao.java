@@ -8,6 +8,8 @@ import com.yyww.mysql.jdbc.vo.QueryOrderVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * (MainOrder)表数据库访问层
  *
@@ -17,5 +19,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface MainOrderDao extends BaseMapper<MainOrderEntity> {
     IPage<OrderPage> queryPage(@Param("page") IPage<MainOrderEntity> page, @Param("param") QueryOrderVo param);
+
+    void removeByOrderIds(@Param("ids") List<String> ids);
 }
 

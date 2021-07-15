@@ -45,8 +45,8 @@ public class MainOrderController {
      * 批量删除
      */
     @DeleteMapping("/delete")
-    public JsonResponse<MainOrderEntity> deleteOrder(@RequestBody List<Long> ids) {
-        mainOrderService.removeByIds(ids);
+    public JsonResponse<MainOrderEntity> deleteOrder(@RequestBody List<String> ids) {
+        mainOrderService.removeByOrderIds(ids);
         return JsonResponse.ok();
     }
 
