@@ -5,7 +5,7 @@
     <resultMap type="com.yyww.mysql.jdbc.vo.OrderPage" id="OrderPageMap">
         <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="macId" column="mac_id" jdbcType="TIMESTAMP"/>
+        <result property="macId" column="mac_id" jdbcType="VARCHAR"/>
         <result property="price" column="price" jdbcType="VARCHAR"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="gender" column="gender" jdbcType="VARCHAR"/>
@@ -13,30 +13,29 @@
 
 
 
-    <!--通过实体作为筛选条件查询-->
     <select id="queryPage" resultMap="OrderPageMap">
         select
-             o.order_id, o.create_time, o.price, o.mac_id, cu.username,cu.gender
+        o.order_id, o.create_time, o.price, o.mac_id, cu.username,cu.gender
         from
-            main_order o
+        main_order o
         left join
-            customer cu
+        customer cu
         on
-            o.user_id = cu.id
+        o.order_id = cu.id
 
         <where>
 
             <if test="orderId != null and orderId != ''">
-                and o.order_id like concat('%',#{param.orderId},'%'))
+                and o.order_id like concat('%',#{param.orderId},'%')
             </if>
             <if test="createStartTime != null and createEndTime != null">
                 and o.create_time &gt; #{param.createStartTime} and o.create_time &lt; #{createEndTime}
             </if>
             <if test="macId != null and macId != ''">
-                and o.macId likeconcat('%',#{param.macId},'%'))
+                and o.macId like concat('%',#{param.machineId},'%')
             </if>
             <if test="username != null and username != ''">
-                and cu.username = #{param.username}
+                and cu.username like concat('%',#{param.username},'%')
             </if>
             <if test="gender != null">
                 and cu.gender = #{param.gender}
@@ -44,11 +43,10 @@
             <if test="price != null">
                 and o.price = #{price}
             </if>
-            <if test="gender != null">
+            <if test="deleted != null">
                 and o.deleted = #{deleted}
             </if>
         </where>
     </select>
-
 </mapper>
 

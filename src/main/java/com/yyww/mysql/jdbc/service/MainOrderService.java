@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yyww.mysql.jdbc.entity.MainOrderEntity;
 import com.yyww.mysql.jdbc.vo.OrderPage;
 import com.yyww.mysql.jdbc.vo.QueryOrderVo;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * (MainOrder)表服务接口
@@ -14,4 +15,6 @@ import com.yyww.mysql.jdbc.vo.QueryOrderVo;
  */
 public interface MainOrderService extends IService<MainOrderEntity> {
     IPage<OrderPage> queryPage(QueryOrderVo vo);
+
+    void add(@Param("mainOrderEntity") MainOrderEntity mainOrderEntity);
 }

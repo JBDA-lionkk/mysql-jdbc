@@ -28,12 +28,7 @@ public class MainOrderController {
     //添加订单
     @PostMapping("/add")
     public JsonResponse<MainOrderEntity> addOrder(@RequestBody MainOrderEntity mainOrderEntity) {
-        mainOrderEntity.setCreateTime(new Date());
-        mainOrderEntity.setUpdateTime(new Date());
-        String s = UUID.randomUUID().toString();
-        String replace = s.replace("-", "");
-        mainOrderEntity.setOrderId(replace);
-        mainOrderService.save(mainOrderEntity);
+        mainOrderService.add(mainOrderEntity);
         return JsonResponse.ok();
     }
 

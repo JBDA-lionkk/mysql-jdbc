@@ -29,7 +29,7 @@ public class QueryOrderVo {
     /**
      * 商品编号
      */
-    private String macId;
+    private String machineId;
     /**
      * 开始时间
      */

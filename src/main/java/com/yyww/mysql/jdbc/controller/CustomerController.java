@@ -1,8 +1,5 @@
 package com.yyww.mysql.jdbc.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yyww.mysql.jdbc.dao.CustomerDao;
 import com.yyww.mysql.jdbc.entity.CustomerEntity;
 import com.yyww.mysql.jdbc.service.CustomerService;
 import com.yyww.mysql.jdbc.utils.JsonResponse;
@@ -20,6 +17,7 @@ import java.util.List;
  * @since 2021-07-13 15:49:00
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/customer")
 public class CustomerController {
     @Resource
@@ -57,6 +55,23 @@ public class CustomerController {
         return JsonResponse.ok();
     }
 
+    /**
+     * 获取全部信息
+     */
+    @GetMapping("/selectAll")
+    public JsonResponse<CustomerEntity> selectAll() {
+        List<CustomerEntity> list = customerService.list(null);
+        for (CustomerEntity customerEntity : list) {
+            return JsonResponse.ok(customerEntity);
+        }
+        return null;
+    }
+
+    @GetMapping("select")
+    public JsonResponse<CustomerEntity> select(Long id) {
+        CustomerEntity byId = customerService.getById(id);
+        return JsonResponse.ok(byId);
+    }
 
 
 //    @GetMapping("/selectAll")

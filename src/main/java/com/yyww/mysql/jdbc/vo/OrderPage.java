@@ -20,7 +20,7 @@ public class OrderPage {
      */
     private String username;
     /**
-     *
+     *机器编码
      */
     private String macId;
     /**
